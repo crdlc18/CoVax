@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sign in</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="ASignContainer">
+       
+
+            <label > SIGN IN </label><br>
+            <label> Username: 
+                <input type="text" id="InputUn" class="inputs"> </label><br>
+            <label> Password: 
+                <input type="text" id="InputPass" class ='inputs'> </label><br>
+
+            <button type="button" id="SubmitBtn">Submit</button><br>
+            <button type="button" id="CancelBtn">Cancel</button>
+            <div class="status" id='status' style="display:none"></div>
+                  
+    </div>
+    
+    <!--pop up-->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">...Oopps</h5>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="$('#modal').modal('hide');">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+   
+    
+
+
+    <script>
+
+    var username= $('#InputUn').val();
+    var pass =$('#InputPass').val();
+    
+
+    $('.inputs').on('keyup', function(){
+        
+        if( username=='' || pass==''){
+            $('#status').hide();
+        }
+        
+    })
+    
+
+    $("#SubmitBtn").on('click', function(){
+        
+        if(username.length==0||pass.length==0){
+            $('#modal .modal-body').html("Please complete the input fields.");
+            $('#modal').modal('show');
+            
+        }
+        else{
+
+            jQuery.ajax({
+            url:'adminSignIn.php',
+            data: {un:username, pass:pass},
+            type:'post',
+            dataType:"text",
+            success: function(data){
+                if(data=='invalid'){
+                    $('#status').text('Invalid');
+                    $('#status').show();
+                }
+                else if (data=='valid'){
+                    $('#status').hide();
+                    window.location.href='adminHome.html';
+
+                }
+            }
+            });
+
+        }
+        
+    });
+
+    </script>
+
+</body>
+</html>
