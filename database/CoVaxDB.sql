@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `covaxdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `covaxdb`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: localhost    Database: covaxdb
@@ -122,7 +120,7 @@ DROP TABLE IF EXISTS `vax_ctr`;
 CREATE TABLE `vax_ctr` (
   `vCtr` int unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`vCtr`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +129,7 @@ CREATE TABLE `vax_ctr` (
 
 LOCK TABLES `vax_ctr` WRITE;
 /*!40000 ALTER TABLE `vax_ctr` DISABLE KEYS */;
-INSERT INTO `vax_ctr` VALUES (1);
+INSERT INTO `vax_ctr` VALUES (1),(2),(3),(4),(5);
 /*!40000 ALTER TABLE `vax_ctr` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,7 +154,7 @@ CREATE TABLE `vax_t` (
 
 LOCK TABLES `vax_t` WRITE;
 /*!40000 ALTER TABLE `vax_t` DISABLE KEYS */;
-INSERT INTO `vax_t` VALUES ('VAX001','Pfizer',15);
+INSERT INTO `vax_t` VALUES ('VAX001','Pfizer',24),('VAX002','AztraZeneca',21),('VAX003','Sinovac',9),('VAX004','Sputnik V',4),('VAX005','Moderna',4);
 /*!40000 ALTER TABLE `vax_t` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -250,4 +248,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-29 12:55:23
+-- Dump completed on 2022-06-30 15:58:30
