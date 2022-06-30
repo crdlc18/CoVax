@@ -6,14 +6,14 @@
     <title>Add Vaccine</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    
-  
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> 
 </head>
-<body>
 
+<body>
+   
     <div class="AHomeContainer">
         <div class="row">
             <!--admin navigation-->
@@ -54,27 +54,36 @@
                 <!--display Vaccine Inventory-->
                 <div class="row">
                     <div class="VacContainer" id="VaxCon" style=" background-color:C8C6C6; height:400px;overflow-y:scroll;" >
-                        <?php 
-                            
-                            require("../db_con/connection.php");
-                            $query = mysqli_query($conn, "SELECT * FROM vax_T");
 
-                            if(mysqli_num_rows($query)>0){
-                                ?>
-                                <label>Vaccine No.   Vaccine Name     Quantity</label> <br>
-                                <?php
+                        <table>
+                            <thead>
+                                <th>Vaccine No.</th>
+                                <th>Vaccine Name</th>
+                                <th>Quantity </th>
+                            </thead>
 
-                                while($content=mysqli_fetch_assoc($query)){
-                                    
-                                    echo "{$content['vaxID']} {$content ['vaxName']}  {$content['quantity']}";
-                                }
-                            }
-                        ?>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <?php
+                                            require("../db_con/connection.php"); 
+                                            $query = mysqli_query($conn, "SELECT * FROM vax_T") or die ($conn->error);
+                
+                                            if(mysqli_num_rows($query)>0){
+                                                while($content=mysqli_fetch_assoc($query)){ 
+                                                    echo "{$content['vaxID']} {$content ['vaxName']}  {$content['quantity']}";?> <br>
+                                                    <?php
+                                                }
+                                            } 
+                                            $conn->close();
+                                        ?>
+                                    </td>
+                                </tr>   
+                            </tbody>   
+                        </table>
                     </div>
                 </div>
-                
             </div>
-    
          </div>
     </div>
 
@@ -90,13 +99,15 @@
               
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary"  onclick="$('#modal').modal('hide');">Ok</button>
+              <button type="button" class="btn btn-primary"  onclick="location.reload()">Ok</button>
             </div>
           </div>
         </div>
       </div>
 
 
+
+ 
     <script>
 
         $("#addVaxBtn").on('click', function(){
@@ -127,6 +138,8 @@
                         $('#modal .modal-title').html("Success!");
                         $('#modal .modal-body').html("Vaccine Record has been updated.");
                         $('#modal').modal('show');
+                        $("#vax").val("0");
+                        $('#qty').val("");
                     }
                  });
                             

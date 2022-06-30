@@ -2,6 +2,7 @@
 
     require("../db_con/connection.php");
 
+   
     $vname =$_POST['vaxName'];
     $quantity=$_POST['qty'];
 
@@ -21,6 +22,7 @@
        mysqli_query($conn, "CALL updateVax('$vname', '$quantity')");
 
     }
+   
 
     $conn->close();
 
