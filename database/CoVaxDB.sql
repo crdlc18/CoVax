@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `covaxdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `covaxdb`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
 -- Host: localhost    Database: covaxdb
@@ -49,7 +51,7 @@ DROP TABLE IF EXISTS `user_ctr`;
 CREATE TABLE `user_ctr` (
   `uCtr` int unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`uCtr`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,6 +60,7 @@ CREATE TABLE `user_ctr` (
 
 LOCK TABLES `user_ctr` WRITE;
 /*!40000 ALTER TABLE `user_ctr` DISABLE KEYS */;
+INSERT INTO `user_ctr` VALUES (1);
 /*!40000 ALTER TABLE `user_ctr` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,6 +92,7 @@ CREATE TABLE `user_t` (
 
 LOCK TABLES `user_t` WRITE;
 /*!40000 ALTER TABLE `user_t` DISABLE KEYS */;
+INSERT INTO `user_t` VALUES ('USER001','Cherrylyn','Cardiel','Alejo','2000-11-18',21,'Female','Rosarito, Sampaloc, Manila','09959006390','cardielcherryyy@gmail.com');
 /*!40000 ALTER TABLE `user_t` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -248,4 +252,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-30 15:58:30
+-- Dump completed on 2022-07-01 22:22:55

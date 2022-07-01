@@ -7,7 +7,7 @@
     $quantity=$_POST['qty'];
 
    
-
+   
     $query = mysqli_query($conn, "SELECT vaxID FROM vax_T WHERE vaxName = '$vname'");
     $total_rows = mysqli_affected_rows($conn); //get the result from the query
 
@@ -23,7 +23,6 @@
 
     }
    
-
     $conn->close();
 
 ?>
