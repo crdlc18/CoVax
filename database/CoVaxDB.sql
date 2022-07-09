@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `covaxdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 
 USE `covaxdb`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: localhost    Database: covaxdb
+-- Host: 127.0.0.1    Database: covaxdb
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
@@ -18,6 +18,37 @@ USE `covaxdb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `appoint_t`
+--
+
+DROP TABLE IF EXISTS `appoint_t`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `appoint_t` (
+  `appointID` int NOT NULL AUTO_INCREMENT,
+  `userID` varchar(10) NOT NULL,
+  `center` varchar(50) NOT NULL,
+  `appointDate` date NOT NULL,
+  `appointTime` varchar(10) DEFAULT NULL,
+  `dose` varchar(10) NOT NULL,
+  `vaccine` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`appointID`),
+  KEY `ap_fk` (`userID`),
+  CONSTRAINT `ap_fk` FOREIGN KEY (`userID`) REFERENCES `user_t` (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appoint_t`
+--
+
+LOCK TABLES `appoint_t` WRITE;
+/*!40000 ALTER TABLE `appoint_t` DISABLE KEYS */;
+INSERT INTO `appoint_t` VALUES (1,'USER001','UP Ayala TechnoHub Center','2022-07-08','09:00 AM','1st dose',NULL);
+/*!40000 ALTER TABLE `appoint_t` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sched_t`
 --
 
@@ -27,9 +58,10 @@ DROP TABLE IF EXISTS `sched_t`;
 CREATE TABLE `sched_t` (
   `schedNo` int NOT NULL AUTO_INCREMENT,
   `nameOfCenter` varchar(50) NOT NULL,
+  `schedDate` date NOT NULL,
   `timeslot` varchar(10) NOT NULL,
   PRIMARY KEY (`schedNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +70,7 @@ CREATE TABLE `sched_t` (
 
 LOCK TABLES `sched_t` WRITE;
 /*!40000 ALTER TABLE `sched_t` DISABLE KEYS */;
+INSERT INTO `sched_t` VALUES (1,'UP Ayala TechnoHub Center','2022-07-08','09:00 AM'),(2,'UP Ayala TechnoHub Center','2022-07-08','12:00 PM'),(3,'UP Ayala TechnoHub Center','2022-07-09','1:00 PM'),(4,'Marikina Sports Complex Center','2022-07-15','10:00 AM');
 /*!40000 ALTER TABLE `sched_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,6 +115,7 @@ CREATE TABLE `user_t` (
   `address` varchar(50) NOT NULL,
   `contactNo` varchar(11) NOT NULL,
   `emailAdd` varchar(30) NOT NULL,
+  `password` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -92,7 +126,7 @@ CREATE TABLE `user_t` (
 
 LOCK TABLES `user_t` WRITE;
 /*!40000 ALTER TABLE `user_t` DISABLE KEYS */;
-INSERT INTO `user_t` VALUES ('USER001','Cherrylyn','Cardiel','Alejo','2000-11-18',21,'Female','Rosarito, Sampaloc, Manila','09959006390','cardielcherryyy@gmail.com');
+INSERT INTO `user_t` VALUES ('USER001','Cherrylyn','Cardiel','Alejo','2000-11-18',21,'Female','Rosarito, Sampaloc, Manila','09959006390','cardielcherryyy@gmail.com','cher');
 /*!40000 ALTER TABLE `user_t` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -252,4 +286,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-01 22:22:55
+-- Dump completed on 2022-07-09 14:05:43

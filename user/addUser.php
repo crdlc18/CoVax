@@ -12,12 +12,12 @@
     $address=$_POST['add'];
     $contact=$_POST['contact'];
     $email=$_POST['email'];
+    $pass=$_POST['pass'];
 
 
-  
     
-   // mysqli_query($conn, "INSERT INTO user_T (fName, Lname, Mname, birthday, age, sex, address, contactNo,emailAdd) VALUES 
-              //  ('$Fname', '$Lname', '$Mname', '$bdate', '$age', '$gender', '$address', '$contact', '$email')") or die($conn->error); 
+   //mysqli_query($conn, "INSERT INTO user_T (fName, Lname, Mname, birthday, age, sex, address, contactNo,emailAdd,password) VALUES 
+              //  ('$Fname', '$Lname', '$Mname', '$bdate', '$age', '$gender', '$address', '$contact', '$email', '$pass')") or die($conn->error); 
     
    $conn->close();
 

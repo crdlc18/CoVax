@@ -40,7 +40,7 @@
                 <input type="text" placeholder="Search.." id="searcBar">
                 <button type="button" id="registerBtn" data-toggle="modal" data-target="#regModal" >
                          Register </button>
-                <button type="button" id="scheduleBtn"> Schedule </button>
+                <button type="button" id="signInBtn"> Sign In </button>
             </ul>   
         </div>
     </div>
@@ -51,7 +51,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Registration Form</h5>
+              <h5 class="modal-title">Sign Up</h5>
               </button>
             </div>
             <div class="modal-body">
@@ -71,6 +71,7 @@
                     <label>Address: <input type="text" id="address"> </label>
                     <label>Contact No. : <input type="text" id="contactNo"> </label>
                     <label>Email Address: <input type="text" id="emailAdd"> </label>
+                    <label>Password: <input type="password" id="pass"> </label>
                 </div>
                 
             </div>
@@ -83,8 +84,32 @@
         </div>
     </div>
 
+    <!--Sign In-->
+    <div class="modal fade" id="signInModal"  role="dialog" >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Hello</h5>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="regForm">
+                  <label>Email Address: <input type="text" id="email"> </label>
+                  <label>Password: <input type="password" id="passwrd"> </label>
+              </div>
+              
+          </div>
 
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-secondary" id="signAdBtn">Sign in as Admin</button>
+            <button type="button" class="btn btn-primary" id="logBtn">Log-in</button>
+          </div>
+        </div>
+      </div>
+  </div>
 
+  
     <!--alert dialog-->
     <div class="modal fade" id="alert" role="dialog">
       <div class="modal-dialog" role="document">
@@ -113,6 +138,7 @@
 
    /*----- YUNG MGA ON KEYUP NA FUNCTION AY DI PA FINAL, PAG MAY DESIGN NA -----*/
 
+   //------------ SIGN UP FORM VALIDATION-----------------------------------------//
 
     $(".stringInput").on('keyup', function(){
         var res= $(this).val();
@@ -166,7 +192,26 @@
         }
     });
 
+    //------------------age generator-----------------//
+    $("#bdate" ).on('change', function() {
+        var bday= $('#bdate').val();
+        var dob = new Date(bday);
+        var today = new Date();
+        var month_diff = Date.now()-dob.getTime();
+        var age_dt=new Date(month_diff);
+        var year =age_dt.getUTCFullYear();
+        var age=Math.abs(year-1970);
+        if(bday.length!=0){
+          $('#age').val(age);
+        }
+        else{
+          $('#age').val('');
+        }
+        
+    });
 
+
+    //---------------------------- SIGN UP FORM BUTTONS ----------------------------------------//
 
     $("#submitBtn").on('click', function(){
       var bdate=$('#bdate').val();
@@ -178,9 +223,10 @@
       var add=$('#address').val();
       var contactNo=$('#contactNo').val();
       var email=$('#emailAdd').val();
+      var pass=$('#pass').val();
 
      
-      if(bdate.length===0|| Fname.length===0 || Lname.length===0 || Mname.length===0 ||
+      if(bdate.length===0|| Fname.length===0 || Lname.length===0 || Mname.length===0 || pass===0 ||
          age.length===0|| gender==='0'|| contactNo.length===0|| email.length===0 ||add.length===0){
             
          flag=2;     
@@ -206,7 +252,7 @@
 
           url:"addUser.php",
           data:{bdate:bdate, fname:Fname, lname:Lname, mname:Mname, age:age, gender:gender, add:add,
-                contact:contactNo, email:email},
+                contact:contactNo, email:email, pass:pass},
           type: "post",
           success: function(data){
               $('#regModal').modal('hide');
@@ -215,30 +261,59 @@
               $('#alert').modal('show');
              
            }
-
         });
       }
-
     });
 
     
-    $("#bdate" ).on('change', function() {
-        var bday= $('#bdate').val();
-        var dob = new Date(bday);
-        var today = new Date();
-        var month_diff = Date.now()-dob.getTime();
-        var age_dt=new Date(month_diff);
-        var year =age_dt.getUTCFullYear();
-        var age=Math.abs(year-1970);
-        if(bday.length!=0){
-          $('#age').val(age);
-        }
-        else{
-          $('#age').val('');
-        }
-        
+    
+
+
+    //---------------------------------FOR SIGN IN FORM ACTION----------------------//
+
+    
+    $("#signInBtn" ).on('click', function() {
+          $('#signInModal').modal('show');
     });
 
+    $("#signAdBtn" ).on('click', function() {
+      window.location.href = "../admin/adminSignIn.html";
+
+    });
+
+    $("#logBtn" ).on('click', function() {
+      var emailIn=$('#email').val();
+      var passIn=$('#passwrd').val();
+
+      if (emailIn.length===0||passIn.length===0){
+        $('#alert .modal-title').html("..Oopps");
+        $('#alert .modal-body').html("All fields must be filled out.");
+        $('#alert').modal('show');
+      }
+      else{
+        jQuery.ajax({
+          url:"checkSignIn.php",
+          data:{emailIn:emailIn, passIn:passIn},
+          type: "post",
+          dataType: "text",
+          success: function(data){
+              if (data==='noRec'){
+                $('#alert .modal-title').html("..Oopps");
+                $('#alert .modal-body').html("Email is not yet registered.");
+                $('#alert').modal('show');
+              }
+              else if (data==='notMatched'){
+                $('#alert .modal-title').html("..Oopps");
+                $('#alert .modal-body').html("Incorrect Password");
+                $('#alert').modal('show');
+              }
+              else if (data==='matched') {
+                window.location.href = "VaxID.php";
+              }
+          }
+        });
+      } 
+    });
 
 </script>
 </html>

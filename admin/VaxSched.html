@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine Record</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> 
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                    <!--admin navigation-->
+                 <div class="col" id="adminNav">
+                    <script> 
+                            $(function(){
+                            $("#adminNav").load("admin_nav/adminNav.html");
+                        });
+                    </script>
+                </div>
+            </div>
+
+            <div class="col">
+                <label for="name of Center">
+                    Name of Center: <input type="text" id="center">
+                </label>
+
+                <label for="date">
+                    Date: <input type="date" id="schedDate">
+                 </label>
+                 
+
+                <label for="timeslot">
+                   Time: <input type="time" id="Time">
+                </label>
+
+
+                <button type="button" id="SubmitBtn"> Submit </button>
+
+
+            </div>
+        </div>
+    </div>
+
+     <!--pop up-->
+     <div class="modal fade" id="modal" tabindex="-1" role="dialog" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">...Oopps</h5>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="$('#modal').modal('hide');">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+</body>
+
+    <script>
+
+        $("#SubmitBtn").on('click', function(){ 
+            var center = $('#center').val();
+            var schedDate= $('#schedDate').val();
+            var check= /\d/;
+            var time_val = $('#Time').val();
+            var oldFormatTimeArray = time_val.split(":");
+            var HH = parseInt(oldFormatTimeArray[0]);
+            var min = oldFormatTimeArray[1];
+            var AMPM = HH >= 12 ? "PM" : "AM";
+            var hours;
+            
+            if(HH == 0){
+                hours = HH + 12;
+            } else if (HH > 12) {
+                hours = HH - 12;
+            } else {
+                hours = HH;
+            }
+            
+            var time = hours + ":" + min + " " + AMPM;
+                
+
+            if (center.length===0||time.length===0 || schedDate===0){
+                $('#modal .modal-body').html("Please complete your input");
+                $('#modal').modal('show');
+            }
+            else if(check.test(center)){
+                $('#modal .modal-body').html("Name of the center must not contain a string");
+                $('#modal').modal('show');
+            }
+            else{
+                jQuery.ajax({
+                    url:"addSched.php",
+                    data:{center:center, schedDate:schedDate, time:time},
+                    type: "post",
+                    
+                    success: function(data){
+                        $('#modal .modal-title').html("Success!");
+                        $('#modal .modal-body').html("Schedule Added.");
+                        $('#modal').modal('show');
+                      
+                    }
+                });
+            }
+        });
+
+    </script>
+</html>
